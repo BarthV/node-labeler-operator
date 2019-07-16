@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-labeler-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: node-labeler-operator
+  template:
+    metadata:
+      labels:
+        name: node-labeler-operator
+    spec:
+      serviceAccountName: node-labeler-operator
+      containers:
+        - name: node-labeler-operator
+          # Replace this with the built image name
+          image: REPLACE_IMAGE
+          command:
+          - node-labeler-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "node-labeler-operator"

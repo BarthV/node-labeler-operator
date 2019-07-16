@@ -1,0 +1,71 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: labelers.barpilot.io
+spec:
+  group: barpilot.io
+  names:
+    kind: Labeler
+    listKind: LabelerList
+    plural: labelers
+    singular: labeler
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            merge:
+              description: MergeSpec sets everything that will be added to selected
+                nodes
+              properties:
+                annotations:
+                  additionalProperties:
+                    type: string
+                  description: 'Annotations is an unstructured key value map stored
+                    with a resource that may be set by external tools to store and
+                    retrieve arbitrary metadata. They are not queryable and should
+                    be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations'
+                  type: object
+                labels:
+                  additionalProperties:
+                    type: string
+                  description: 'Map of string keys and values that can be used to
+                    organize and categorize (scope and select) objects. May match
+                    selectors of replication controllers and services. More info:
+                    http://kubernetes.io/docs/user-guide/labels'
+                  type: object
+                taints:
+                  description: If specified, the node's taints.
+                  items:
+                    type: object
+                  type: array
+              type: object
+            nodeSelectorTerms:
+              description: Required. A list of node selector terms. The terms are
+                ORed.
+              items:
+                type: object
+              type: array
+          required:
+          - nodeSelectorTerms
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true

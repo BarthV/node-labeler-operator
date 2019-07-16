@@ -1,0 +1,29 @@
+apiVersion: barpilot.io/v1alpha1
+kind: Labeler
+metadata:
+  name: example
+  labels:
+    operator: node-labeler-operator
+spec:
+  nodeSelectorTerms:
+  - matchExpressions:
+    - key: kubernetes.io/hostname
+      operator: In
+      values:
+      - minikube
+    - key: beta.kubernetes.io/os
+      operator: In
+      values:
+      - linux
+  - matchExpressions:
+    - key: another-node-label-key
+      operator: Exists
+  merge:
+    labels:
+      minikube: "true"
+    annotations:
+      node-labeler-operator: works
+    taints:
+    - key: dedicated
+      value: foo
+      effect: PreferNoSchedule

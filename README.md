@@ -10,23 +10,18 @@ NOTE: This is an alpha-status project. We do regular tests on the code and funct
 
 ## Requirements
 
-_node-labeler-operator_ is meant to be run on Kubernetes 1.8+. All dependecies have been vendored, so there's no need to any additional download.
+_node-labeler-operator_ is meant to be run on Kubernetes 1.11.3+. All dependecies have been vendored, so there's no need to any additional download.
 
 ## Usage
 
 ### Installation
-
-In order to create _node-labeler-operator_ inside a Kubernetes cluster, the operator has to be deployed. It can be done with a deployment.
-```
-kubectl run node-labeler-operator --image=barpilot/node-labeler-operator --namespace=kube-system
-```
 
 ### Configuration
 
 _node-labeler-operator_ is using a [CRD](https://kubernetes.io/docs/concepts/api-extension/custom-resources/) for its configuration.
 Here is a description of an object:
 ```yaml
-apiVersion: labeler.barpilot.io/v1alpha1
+apiVersion: barpilot.io/v1alpha1
 kind: Labeler
 metadata:
   name: example
